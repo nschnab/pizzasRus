@@ -81,10 +81,11 @@ create table pizza_discount (
 );
 
 create table baseprice (
-	baseprice_Size varchar(30) primary key not null,
-    baseprice_CrustType varchar(30) primary key not null,
+	baseprice_Size varchar(30) not null,
+    baseprice_CrustType varchar(30) not null,
     baseprice_CustPrice decimal (5,2),
-    baseprice_BusPrice decimal(5,2)
+    baseprice_BusPrice decimal(5,2),
+    primary key (baseprice_Size, baseprice_CrustType)
 );
 
 create table topping (
