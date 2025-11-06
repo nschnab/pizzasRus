@@ -46,3 +46,64 @@ create table dinein (
     dinein_TableNum int,
     constraint foreign key (ordertable_OrderID) references ordertable(ordertable_OrderID)
 );
+
+create table discount (
+	discount_DiscountID int primary key not null,
+    discount_DiscountName varchar(30),
+    discount_Amount decimal (5,2),
+    discount_IsPercent boolean
+);
+
+create table order_discount (
+	ordertable_OrderID int not null,
+    discount_DiscountID int not null,
+    constraint foreign key (ordertable_OrderID) references ordertable(ordertable_OrderID),
+    constraint foreign key (discount_DiscountID) references discount(discount_DiscountID)
+);
+
+create table pizza (
+	pizza_PizzaID int primary key not null,
+    pizza_Size varchar(30),
+    pizza_CrustType varchar(30),
+    pizza_PizzaState varchar(30),
+    pizza_PizzaDate datetime,
+    pizza_CustPrice decimal (5,2),
+    pizza_BusPrice decimal (5,2),
+    ordertable_orderID int not null,
+    constraint foreign key (ordertable_orderID) references ordertable(ordertable_orderID)
+);
+
+create table pizza_discount (
+	pizza_PizzaID int not null,
+    discount_DiscountID int not null,
+    constraint foreign key (pizza_PizzaID) references pizza(pizza_PizzaID),
+    constraint foreign key (discount_DiscountID) references discount(discount_DiscountID)
+);
+
+create table baseprice (
+	baseprice_Size varchar(30) primary key not null,
+    baseprice_CrustType varchar(30) primary key not null,
+    baseprice_CustPrice decimal (5,2),
+    baseprice_BusPrice decimal(5,2)
+);
+
+create table topping (
+	topping_TopID int primary key not null,
+	topping_TopName varchar(30),
+    topping_SmallAMT decimal(5,2),
+    topping_MedAMT decimal(5,2),
+    topping_LgAMT decimal(5,2),
+    topping_XLAMT decimal(5,2),
+    topping_CustPrice decimal(5,2),
+    topping_BusPrice decimal(5,2),
+    topping_MinINVT int,
+    topping_CutINVT int
+);
+
+create table pizza_topping (
+	pizza_PizzaID int not null,
+    topping_TopID int not null,
+    pizza_topping_IsDouble int,
+    constraint foreign key (pizza_PizzaID) references pizza(pizza_PizzaID),
+    constraint foreign key (topping_TopID) references topping(topping_TopID)
+);
