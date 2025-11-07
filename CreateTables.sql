@@ -1,11 +1,16 @@
+
+-- Create Schema
 DROP SCHEMA IF EXISTS PizzaDB;
 CREATE SCHEMA PizzaDB;
 USE PizzaDB;
 
+-- Create user 
 DROP USER IF EXISTS 'dbtester';
 CREATE USER 'dbtester' IDENTIFIED BY 'CPSC4620'; 
 GRANT ALL ON PizzaDB.* TO 'dbtester';
 
+
+-- Create Tables
 create table customer (
 	customer_CustID int primary key not null,
     customer_FName varchar(30) not null,
