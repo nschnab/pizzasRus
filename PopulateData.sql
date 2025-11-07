@@ -8,8 +8,10 @@ insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_
 insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (8, 'Mushrooms', 0.75, 0.1, 52, 50, 1.5, 2, 2.5, 3);
 insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (9, 'Black Olives', 0.6, 0.1, 39, 25, 0.75, 1, 1.5, 2);
 insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (10, 'Pineapple', 1, 0.25, 15, 0, 1, 1.25, 1.75, 2);
-
-
-
-
-
+insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (11, 'Jalapenos', 0.5, 0.05, 64, 0, 0.5, 0.75, 1.25, 1.75);
+insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (11, 'Jalapenos', 0.5, 0.05, 36, 0, 0.6, 1, 1.3, 1.75);
+insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (12, 'Regular Cheese', 0.5, 0.12, 250, 50, 2, 3.5, 5, 7);
+insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (13, 'Four Cheese Blend', 1, 0.15, 150, 25, 2, 3.5, 5, 7);
+insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (14, 'Feta Cheese', 1.5, 0.18, 75, 0, 1.75, 3, 4, 5.5);
+insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (15, 'Goat Cheese', 1.5, 0.2, 54, 0, 1.6, 2.75, 4, 5.5);
+insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (16, 'Bacon', 1.5, 0.25, 89, 0, 1, 1.5, 2, 3);
