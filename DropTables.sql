@@ -1,18 +1,17 @@
-use PizzaDB;
 
-drop table customer;
-drop table ordertable;
-drop table pickup;
-drop table delivery;
-drop table dinein;
-drop table discount;
-drop table order_discount;
-drop table pizza;
-drop table pizza_discount;
-drop table baseprice;
-drop table topping;
-drop table pizza_topping;
+DROP TABLE pizza_topping;
+DROP TABLE topping;
+DROP TABLE pizza_discount;
+DROP TABLE pizza;
+DROP TABLE order_discount;
+DROP TABLE discount;
+DROP TABLE dinein;
+DROP TABLE delivery;
+DROP TABLE pickup;
+DROP TABLE ordertable;
+DROP TABLE customer;
+DROP TABLE baseprice;
 
-drop view ToppingPopularity;
-drop view ProfitByPizza;
-drop view ProfitByOrderType;
+DROP VIEW ToppingPopularity;
+DROP VIEW ProfitByPizza;
+DROP VIEW ProfitByOrderType;
