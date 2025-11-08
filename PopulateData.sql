@@ -20,11 +20,11 @@ insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_
 
 -- Insert values into discounts table
 insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Employee', 0.15, 1);
-insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Lunch Special Medium', 1, 0);
-insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Lunch Special Large', 2, 0);
-insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Specialty Pizza', 1.50, 0);
-insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Happy Hour', 0.10, 1);
-insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Gameday Special', 0.20, 1);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (2, 'Lunch Special Medium', 1, 0);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (3, 'Lunch Special Large', 2, 0);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (4, 'Specialty Pizza', 1.50, 0);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (5, 'Happy Hour', 0.10, 1);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (6, 'Gameday Special', 0.20, 1);
 
 -- Insert values into Base Prices
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('Small', 'Thin', 3, 0.5);
@@ -38,7 +38,7 @@ insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice,
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('Large', 'Thin', 8, 1.25);
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('Large', 'Original', 8, 2);
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('Large', 'Pan', 9, 3);
-insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('Large', 'Thin', 9.5, 4);
+insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('Large', 'Gluten-Free', 9.5, 4);
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('XLarge', 'Thin', 10, 2);
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('XLarge', 'Original', 10, 3);
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('XLarge', 'Pan', 11.5, 4.5);
