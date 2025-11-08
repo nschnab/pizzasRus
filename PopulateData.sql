@@ -19,7 +19,12 @@ insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_
 insert into topping (topping_TopID, topping_TopName, topping_CustPrice, topping_BusPrice, topping_CutINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT) values (17, 'Bacon', 1.5, 0.25, 89, 0, 1, 1.5, 2, 3);
 
 -- Insert values into discounts table
--- insert into discount (discount_DiscountID, discount_DiscountName, discount_IsPercent, discount_Amount) values (1, 'Employee', '15%');
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Employee', 0.15, 1);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Lunch Special Medium', 1, 0);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Lunch Special Large', 2, 0);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Specialty Pizza', 1.50, 0);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Happy Hour', 0.10, 1);
+insert into discount (discount_DiscountID, discount_DiscountName,  discount_Amount, discount_IsPercent) values (1, 'Gameday Special', 0.20, 1);
 
 -- Insert values into Base Prices
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('Small', 'Thin', 3, 0.5);
