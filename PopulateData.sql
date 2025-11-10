@@ -45,9 +45,46 @@ insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice,
 insert into baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice) values ('XLarge', 'Gluten-Free', 112.5, 6);
 
 -- insert into ordertable
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values ();
+insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (6, 'delivery', '2025-01-02 18:17:00', 25.81, 3.64, 1);
+insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (7, 'delivery', '2025-02-13 20:32:00', 31.66, 6, 1);
+insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (4, 'delivery', '2025-02-20 19:11:00', 68.95, 17.39, 1);
+insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (1, 'dinein', '2025-01-05 12:03:00', 19.75, 3.68, 1);
+insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (2, 'dinein', '2025-02-03 12:05:00', 19.78, 4.63, 1);
+insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (5, 'pickup', '2025-01-02 17:30:00', 25.81, 3.64, 1);
+insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (3, 'pickup', '2025-01-03 21:30:00', 89.28, 19.8, 1);
+
+-- insert into pizza
+insert into pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice) values
+('Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+('Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+('Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+('Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+('Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+('Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+('Large','Thin','completed','2025-01-02 18:17:00',25.81,3.64),
+('Large','Thin','completed','2025-01-05 12:03:00',19.75,3.68),
+('Large','Thin','completed','2025-02-13 20:32:00',18,2.75),
+('Large','Thin','completed','2025-02-13 20:32:00',19.25,3.25),
+('Medium','Pan','completed','2025-02-03 12:05:00',13.85,3.23),
+('Small','Original','completed','2025-02-03 12:05:00',6.93,1.4),
+('XLarge','Gluten-Free','completed','2025-01-02 17:30:00',28.7,7.84),
+('XLarge','Original','completed','2025-02-20 19:11:00',26.75,5.55),
+('XLarge','Original','completed','2025-02-20 19:11:00',27.94,5.59),
+('XLarge','Original','completed','2025-02-20 19:11:00',31.5,6.25);
+
+-- insert into customer
+insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Andrew', 'Wilkes-Krier', 8642545861);
+insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Frank', 'Turner', 8642328944);
+insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Matt', 'Engers', 8644749953);
+insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Milo', 'Auckerman', 8648785679);
 
 -- insert values into delivery
 insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip) values (1, 115, 'Party Blvd', 'Anderson', 'SC', 29621);
 insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip) values (2, 6745 , 'Wessex St', 'Anderson', 'SC', 29621);
 insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip) values (3, 8879 , 'Suburban Lane', 'Anderson', 'SC', 29621);
+
+-- insert into pickup
+insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (1, 1);
+
+-- insert into pickup
+insert into dinein (ordertable_OrderID, dinein_TableNum) values (4, 21);
