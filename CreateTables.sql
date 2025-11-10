@@ -80,7 +80,7 @@ create table pizza (
     pizza_Size varchar(30),
     pizza_CrustType varchar(30),
     pizza_PizzaState varchar(30),
-    pizza_PizzaDate datetime,
+    pizza_PizzaDate varchar(30),
     pizza_CustPrice decimal (5,2),
     pizza_BusPrice decimal (5,2),
     ordertable_orderID int not null,

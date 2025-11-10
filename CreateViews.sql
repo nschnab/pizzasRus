@@ -7,22 +7,22 @@ from topping
 order by `ToppingCount` desc, topping_TopName;
 
 -- drop view if exists ProfitByPizza;
-create view ProfitByPizza as
-select 
-	p.pizza_Size as Size, 
-    p.pizza_CrustType as Crust, 
-    (p.pizza_CustPrice - p.pizza_BusPrice) * d.discount_Amount as Profit, 
-    month(p.pizza_PizzaDate) as OrderMonth
-from pizza p
-join pizza_discount pd on pd.pizza_PizzaID = p.pizza_PizzaID
-join discount d on d.discount_DiscountID = pd.discount_DiscountID;
+CREATE VIEW ProfitByPizza AS
+SELECT 
+    p.pizza_Size AS Size,
+    p.pizza_CrustType AS Crust,
+    (p.pizza_CustPrice - p.pizza_BusPrice) * d.discount_Amount AS Profit,
+    DATE_FORMAT(p.pizza_PizzaDate, '%m') AS OrderMonth
+FROM pizza p
+JOIN pizza_discount pd ON pd.pizza_PizzaID = p.pizza_PizzaID
+JOIN discount d ON d.discount_DiscountID = pd.discount_DiscountID;
 
 -- drop view if exists ProfitByOrderType;
-create view ProfitByOrderType as
-select 
-	o.ordertable_OrderType as CustomerType, 
-	DATE_FORMAT(o.ordertable_OrderDateTime, '%m-%d') as OrderMonth,
-    (o.ordertable_CustPrice - o.ordertable_BusPrice) as 'Profit',
-	o.ordertable_BusPrice as OrderTotalCost,
-    o.ordertable_CustPrice as TotalOrderPrice
-from ordertable o;
+CREATE VIEW ProfitByOrderType AS
+SELECT 
+    o.ordertable_OrderType AS CustomerType,
+    DATE_FORMAT(o.ordertable_OrderDateTime, '%m-%d') AS OrderMonth,
+    o.ordertable_CustPrice - o.ordertable_BusPrice AS Profit,
+    o.ordertable_BusPrice AS TotalOrderCost,
+    o.ordertable_CustPrice AS TotalOrderPrice
+FROM ordertable o;
