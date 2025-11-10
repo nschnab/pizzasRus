@@ -76,19 +76,22 @@ insert into pizza (ordertable_orderID, pizza_Size, pizza_CrustType, pizza_PizzaS
 (4,'XLarge','Original','completed','2025-02-20 19:11:00',31.5,6.25);
 
 -- insert into customer
-insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Andrew', 'Wilkes-Krier', 8642545861);
-insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Frank', 'Turner', 8642328944);
-insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Matt', 'Engers', 8644749953);
-insert into customer (customer_FName, customer_LName, customer_PhoneNum) values ('Milo', 'Auckerman', 8648785679);
+INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES
+    ('Andrew', 'Wilkes-Krier', '8642545861'),
+    ('Matt', 'Engers', '8644749953'),
+    ('Frank', 'Turner', '8642328944'),
+    ('Milo', 'Auckerman', '8648785679');
 
 -- insert values into delivery
-insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip) values (1, 115, 'Party Blvd', 'Anderson', 'SC', 29621);
-insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip) values (2, 6745 , 'Wessex St', 'Anderson', 'SC', 29621);
-insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip) values (3, 8879 , 'Suburban Lane', 'Anderson', 'SC', 29621);
-
+insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_ZIP, delivery_IsDelivered) values
+    (4, 115, 'Party Blvd', 'Anderson', 'SC', 29621, 1),
+    (6, 6745, 'Wessex St', 'Anderson', 'SC', 29621, 1),
+    (7, 8879, 'Suburban', 'Anderson','SC', 29621, 1);
+    
 -- insert into pickup
 insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (3, 1); 
 insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (5, 1);
 
 -- insert into pickup
-insert into dinein (ordertable_OrderID, dinein_TableNum) values (4, 21);
+insert into dinein (ordertable_OrderID, dinein_TableNum) values (1, 21);
+insert into dinein (ordertable_OrderID, dinein_TableNum) values (2, 4);
