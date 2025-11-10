@@ -17,12 +17,12 @@ from pizza p
 join pizza_discount pd on pd.pizza_PizzaID = p.pizza_PizzaID
 join discount d on d.discount_DiscountID = pd.discount_DiscountID;
 
-drop view if exists ProfitByOrderType;
+-- drop view if exists ProfitByOrderType;
 create view ProfitByOrderType as
 select 
 	o.ordertable_OrderType as CustomerType, 
 	DATE_FORMAT(o.ordertable_OrderDateTime, '%m-%d') as OrderMonth,
-	o.ordertable_CustPrice as TotalOrderPrice,
+    (o.ordertable_CustPrice - o.ordertable_BusPrice) as 'Profit',
 	o.ordertable_BusPrice as OrderTotalCost,
-	o.ordertable_CustPrice - o.ordertable_BusPrice as 'Profit'
+    o.ordertable_CustPrice as TotalOrderPrice
 from ordertable o;
