@@ -40,7 +40,7 @@ create table delivery (
 	delivery_HouseNum int not null,
     delivery_Street varchar(30) not null,
     delivery_City varchar(30) not null,
-    delivery_State varchar(30) not null,
+    delivery_State varchar(2) not null,
     delivery_Zip int not null,
     delivery_IsDelivered boolean not null default 0,
     constraint foreign key (ordertable_OrderID) references ordertable(ordertable_OrderID)
@@ -67,6 +67,14 @@ create table order_discount (
     constraint foreign key (discount_DiscountID) references discount(discount_DiscountID)
 );
 
+create table baseprice (
+	baseprice_Size varchar(30) not null,
+    baseprice_CrustType varchar(30) not null,
+    baseprice_CustPrice decimal (5,2) not null,
+    baseprice_BusPrice decimal(5,2) not null,
+    primary key (baseprice_Size, baseprice_CrustType)
+);
+
 create table pizza (
 	pizza_PizzaID int primary key not null auto_increment,
     pizza_Size varchar(30),
@@ -76,9 +84,11 @@ create table pizza (
     pizza_CustPrice decimal (5,2),
     pizza_BusPrice decimal (5,2),
     ordertable_orderID int not null,
-    constraint foreign key (ordertable_orderID) references ordertable(ordertable_orderID),
-    constraint foreign key (pizza_CrustType) references baseprice(baseprice_CrustType),
-    constraint foreign key (pizza_Size) references baseprice(baseprice_Size)
+    INDEX idx_baseprice (pizza_Size, pizza_CrustType),
+    CONSTRAINT fk_order FOREIGN KEY (ordertable_orderID)
+        REFERENCES ordertable(ordertable_orderID),
+    CONSTRAINT fk_baseprice FOREIGN KEY (pizza_Size, pizza_CrustType)
+        REFERENCES baseprice(baseprice_Size, baseprice_CrustType)
 );
 
 create table pizza_discount (
@@ -87,14 +97,6 @@ create table pizza_discount (
     primary key (pizza_PizzaID, discount_DiscountID),
     constraint foreign key (pizza_PizzaID) references pizza(pizza_PizzaID),
     constraint foreign key (discount_DiscountID) references discount(discount_DiscountID)
-);
-
-create table baseprice (
-	baseprice_Size varchar(30) not null,
-    baseprice_CrustType varchar(30) not null,
-    baseprice_CustPrice decimal (5,2) not null,
-    baseprice_BusPrice decimal(5,2) not null,
-    primary key (baseprice_Size, baseprice_CrustType)
 );
 
 create table topping (
