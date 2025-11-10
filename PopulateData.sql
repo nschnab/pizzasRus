@@ -10,7 +10,7 @@ INSERT INTO topping (topping_topName, topping_SmallAMT, topping_MedAMT, topping_
 ('Goat Cheese', 1.6, 2.75, 4, 5.5, 1.5, 0.2, 0, 54),
 ('Green Pepper', 1, 1.5, 2, 2.5, 0.5, 0.02, 25, 79),
 ('Ham', 2, 2.5, 3.25, 4, 1.5, 0.15, 25, 78),
-('Jalapenos', 0.5, 0.75, 1.25, 1.75, 0.5, 0.05, 0, 0),
+('Jalapenos', 0.5, 0.75, 1.25, 1.75, 0.5, 0.05, 0, 64),
 ('Mushrooms', 1.5, 2, 2.5, 3, 0.75, 0.1, 50, 52),
 ('Onion', 1, 1.5, 2, 2.75, 0.5, 0.02, 25, 85),
 ('Pepperoni', 2, 2.75, 3.5, 4.5, 1.25, 0.2, 50, 100),
