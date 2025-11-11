@@ -48,13 +48,14 @@ INSERT INTO baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice,
 ('XLarge', 'Gluten-Free', 12.5, 6);
 
 -- insert into ordertable
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (6, 'delivery', '2025-01-02 18:17:00', 25.81, 3.64, 1);
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (7, 'delivery', '2025-02-13 20:32:00', 31.66, 6, 1);
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (4, 'delivery', '2025-02-20 19:11:00', 68.95, 17.39, 1);
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (1, 'dinein', '2025-01-05 12:03:00', 19.75, 3.68, 1);
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (2, 'dinein', '2025-02-03 12:05:00', 19.78, 4.63, 1);
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (5, 'pickup', '2025-01-02 17:30:00', 25.81, 3.64, 1);
-insert into ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) values (3, 'pickup', '2025-01-03 21:30:00', 89.28, 19.8, 1);
+INSERT INTO ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) VALUES
+(1, 'dinein', '2025-01-05 12:03:00', 19.75, 3.68, 1),
+(2, 'dinein', '2025-02-03 12:05:00', 19.78, 4.63, 1),
+(3, 'pickup', '2025-01-03 21:30:00', 89.28, 19.8, 1),
+(4, 'delivery', '2025-02-20 19:11:00', 68.95, 17.39, 1),
+(5, 'pickup', '2025-01-02 17:30:00', 28.7, 7.84, 1),
+(6, 'delivery', '2025-01-02 18:17:00', 25.81, 3.64, 1),
+(7, 'delivery', '2025-02-13 20:32:00', 31.66, 6, 1);
 
 -- insert into pizza
 insert into pizza (ordertable_orderID, pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice) values
