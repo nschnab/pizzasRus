@@ -87,7 +87,7 @@ INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES
 insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_ZIP, delivery_IsDelivered) values
     (4, 115, 'Party Blvd', 'Anderson', 'SC', 29621, 1),
     (6, 6745, 'Wessex St', 'Anderson', 'SC', 29621, 1),
-    (7, 8879, 'Suburban', 'Anderson','SC', 29621, 1);
+    (7, 8879, 'Suburban Lane', 'Anderson','SC', 29621, 1);
     
 -- insert into pickup
 insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (3, 1); 
