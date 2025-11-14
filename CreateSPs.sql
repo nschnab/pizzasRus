@@ -22,6 +22,7 @@ BEGIN
 END %%
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS CreateOrder;
 DELIMITER $$
 CREATE PROCEDURE CreateOrder (
     IN custID INT,
@@ -40,22 +41,32 @@ CREATE PROCEDURE CreateOrder (
 BEGIN
     DECLARE orderID INT;
 
-    INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime,
-                            ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
-    VALUES (custID, orderType, orderDateTime, custPrice, busPrice, isComplete);
+    INSERT INTO ordertable (
+        customer_CustID,
+        ordertable_OrderType,
+        ordertable_OrderDateTime,
+        ordertable_CustPrice,
+        ordertable_BusPrice,
+        ordertable_isComplete
+    )
+    VALUES (
+        custID,
+        orderType,
+        orderDateTime,
+        custPrice,
+        busPrice,
+        isComplete
+    );
+
     SET orderID = LAST_INSERT_ID();
 
     IF orderType = 'Dine-in' THEN
         INSERT INTO dinein (ordertable_OrderID, dinein_TableNum)
         VALUES (orderID, tableNum);
-    END IF;
-
-    IF orderType = 'Pickup' THEN
+    ELSEIF orderType = 'Pickup' THEN
         INSERT INTO pickup (ordertable_OrderID, pickup_IsPickedUp)
         VALUES (orderID, isPickedUp);
-    END IF;
-
-    IF orderType = 'Delivery' THEN
+    ELSEIF orderType = 'Delivery' THEN
         INSERT INTO delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_Zip, delivery_IsDelivered)
         VALUES (orderID, houseNum, street, zip, isDelivered);
     END IF;
@@ -69,13 +80,14 @@ CREATE PROCEDURE AddPizza (
     IN orderID INT,
     IN size VARCHAR(30),
     IN crust VARCHAR(30),
-    IN pizzaDate DATETIME,
+    IN pizzaDate VARCHAR(30),
     IN custPrice DECIMAL(6,2),
     IN busPrice DECIMAL(6,2)
 )
 BEGIN
-    INSERT INTO pizza (pizza_OrderID, pizza_Size, pizza_Crust, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice)
+    INSERT INTO pizza (ordertable_orderID, pizza_Size, pizza_CrustType, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice)
     VALUES (orderID, size, crust, pizzaDate, custPrice, busPrice);
+    
     SELECT LAST_INSERT_ID() AS NewPizzaID;
 END $$
 DELIMITER ;
