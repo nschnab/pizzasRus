@@ -1,4 +1,4 @@
-USE PizzaDB;
+
 
 -- Insert values into the topping table
 INSERT INTO topping (topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT) VALUES
@@ -63,9 +63,7 @@ VALUES
 -- Create orders
 
 -- insert into pizza
-INSERT INTO pizza 
-(pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_orderID)
-VALUES
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_orderID) VALUES
 -- Order 1 (dinein) → 1 pizza
 ('Large', 'Thin', 'Completed', '2025-01-05 12:03:00', 19.75, 3.68, 1),
 
