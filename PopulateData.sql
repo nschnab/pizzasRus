@@ -48,51 +48,85 @@ INSERT INTO baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice,
 ('XLarge', 'Gluten-Free', 12.5, 6);
 
 -- insert into ordertable
-INSERT INTO ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) VALUES
-(1, 'dinein', '2025-01-05 12:03:00', 19.75, 3.68, 1),
-(2, 'dinein', '2025-02-03 12:05:00', 19.78, 4.63, 1),
-(3, 'pickup', '2025-01-03 21:30:00', 89.28, 19.8, 1),
-(4, 'delivery', '2025-02-20 19:11:00', 68.95, 17.39, 1),
-(5, 'pickup', '2025-01-02 17:30:00', 28.7, 7.84, 1),
-(6, 'delivery', '2025-01-02 18:17:00', 25.81, 3.64, 1),
-(7, 'delivery', '2025-02-13 20:32:00', 31.66, 6, 1);
+-- INSERT INTO ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) VALUES
+-- (1, 'dinein', '2025-01-05 12:03:00', 19.75, 3.68, 1),
+-- (2, 'dinein', '2025-02-03 12:05:00', 19.78, 4.63, 1),
+-- (3, 'pickup', '2025-01-03 21:30:00', 89.28, 19.8, 1),
+-- (4, 'delivery', '2025-02-20 19:11:00', 68.95, 17.39, 1),
+-- (5, 'pickup', '2025-01-02 17:30:00', 28.7, 7.84, 1),
+-- (6, 'delivery', '2025-01-02 18:17:00', 25.81, 3.64, 1),
+-- (7, 'delivery', '2025-02-13 20:32:00', 31.66, 6, 1);
+
+-- Create orders
+CALL CreateOrder(NULL, 'dinein', '2025-01-05 12:03:00', 0, 0, 1, 21, NULL, NULL, NULL, NULL, NULL);
+CALL CreateOrder(NULL, 'dinein', '2025-02-03 12:05:00', 0, 0, 1, 4, NULL, NULL, NULL, NULL, NULL);
+CALL CreateOrder(NULL, 'pickup', '2025-01-03 21:30:00', 0, 0, 1, NULL, NULL, NULL, NULL, NULL, 1);
+CALL CreateOrder(NULL, 'delivery', '2025-02-20 19:11:00', 0, 0, 1, NULL, 115, 'Party Blvd', '29621', 1, NULL);
+CALL CreateOrder(NULL, 'pickup', '2025-01-02 17:30:00', 0, 0, 1, NULL, NULL, NULL, NULL, NULL, 1);
+CALL CreateOrder(NULL, 'delivery', '2025-01-02 18:17:00', 0, 0, 1, NULL, 6745, 'Wessex St', '29621', 1, NULL);
+CALL CreateOrder(NULL, 'delivery', '2025-02-13 20:32:00', 0, 0, 1, NULL, 8879, 'Suburban Lane', '29621', 1, NULL);
+
+
 
 -- insert into pizza
-insert into pizza (ordertable_orderID, pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice) values
-(3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
-(3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
-(3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
-(3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
-(3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
-(3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
-(6,'Large','Thin','completed','2025-01-02 18:17:00',25.81,3.64),
-(1,'Large','Thin','completed','2025-01-05 12:03:00',19.75,3.68),
-(7,'Large','Thin','completed','2025-02-13 20:32:00',18,2.75),
-(7,'Large','Thin','completed','2025-02-13 20:32:00',19.25,3.25),
-(2,'Medium','Pan','completed','2025-02-03 12:05:00',13.85,3.23),
-(2,'Small','Original','completed','2025-02-03 12:05:00',6.93,1.4),
-(5,'XLarge','Gluten-Free','completed','2025-01-02 17:30:00',28.7,7.84),
-(4,'XLarge','Original','completed','2025-02-20 19:11:00',26.75,5.55),
-(4,'XLarge','Original','completed','2025-02-20 19:11:00',27.94,5.59),
-(4,'XLarge','Original','completed','2025-02-20 19:11:00',31.5,6.25);
+-- insert into pizza (ordertable_orderID, pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice) values
+-- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+-- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+-- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+-- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+-- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+-- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
+-- (6,'Large','Thin','completed','2025-01-02 18:17:00',25.81,3.64),
+-- (1,'Large','Thin','completed','2025-01-05 12:03:00',19.75,3.68),
+-- (7,'Large','Thin','completed','2025-02-13 20:32:00',18,2.75),
+-- (7,'Large','Thin','completed','2025-02-13 20:32:00',19.25,3.25),
+-- (2,'Medium','Pan','completed','2025-02-03 12:05:00',13.85,3.23),
+-- (2,'Small','Original','completed','2025-02-03 12:05:00',6.93,1.4),
+-- (5,'XLarge','Gluten-Free','completed','2025-01-02 17:30:00',28.7,7.84),
+-- (4,'XLarge','Original','completed','2025-02-20 19:11:00',26.75,5.55),
+-- (4,'XLarge','Original','completed','2025-02-20 19:11:00',27.94,5.59),
+-- (4,'XLarge','Original','completed','2025-02-20 19:11:00',31.5,6.25);
+
+CALL AddPizza(3, 'Large', 'Original', '2025-01-03 21:30:00', 14.88, 3.3);
+CALL AddPizza(3, 'Large', 'Original', '2025-01-03 21:30:00', 14.88, 3.3);
+CALL AddPizza(3, 'Large', 'Original', '2025-01-03 21:30:00', 14.88, 3.3);
+CALL AddPizza(3, 'Large', 'Original', '2025-01-03 21:30:00', 14.88, 3.3);
+CALL AddPizza(3, 'Large', 'Original', '2025-01-03 21:30:00', 14.88, 3.3);
+CALL AddPizza(3, 'Large', 'Original', '2025-01-03 21:30:00', 14.88, 3.3);
+
+CALL AddPizza(6, 'Large', 'Thin', '2025-01-02 18:17:00', 25.81, 3.64);
+CALL AddPizza(1, 'Large', 'Thin', '2025-01-05 12:03:00', 19.75, 3.68);
+CALL AddPizza(7, 'Large', 'Thin', '2025-02-13 20:32:00', 18, 2.75);
+CALL AddPizza(7, 'Large', 'Thin', '2025-02-13 20:32:00', 19.25, 3.25);
+CALL AddPizza(2, 'Medium', 'Pan', '2025-02-03 12:05:00', 13.85, 3.23);
+CALL AddPizza(2, 'Small', 'Original', '2025-02-03 12:05:00', 6.93, 1.4);
+CALL AddPizza(5, 'XLarge', 'Gluten-Free', '2025-01-02 17:30:00', 28.7, 7.84);
+CALL AddPizza(4, 'XLarge', 'Original', '2025-02-20 19:11:00', 26.75, 5.55);
+CALL AddPizza(4, 'XLarge', 'Original', '2025-02-20 19:11:00', 27.94, 5.59);
+CALL AddPizza(4, 'XLarge', 'Original', '2025-02-20 19:11:00', 31.5, 6.25);
 
 -- insert into customer
-INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES
-    ('Andrew', 'Wilkes-Krier', '8642545861'),
-    ('Matt', 'Engers', '8644749953'),
-    ('Frank', 'Turner', '8642328944'),
-    ('Milo', 'Auckerman', '8648785679');
+-- INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES
+--     ('Andrew', 'Wilkes-Krier', '8642545861'),
+--     ('Matt', 'Engers', '8644749953'),
+--     ('Frank', 'Turner', '8642328944'),
+--     ('Milo', 'Auckerman', '8648785679');
+
+CALL AddCustomerIfNotExists('Andrew', 'Wilkes-Krier', '8642545861');
+CALL AddCustomerIfNotExists('Matt', 'Engers', '8644749953');
+CALL AddCustomerIfNotExists('Frank', 'Turner', '8642328944');
+CALL AddCustomerIfNotExists('Milo', 'Auckerman', '8648785679');
 
 -- insert values into delivery
-insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_ZIP, delivery_IsDelivered) values
-    (4, 115, 'Party Blvd', 'Anderson', 'SC', 29621, 1),
-    (6, 6745, 'Wessex St', 'Anderson', 'SC', 29621, 1),
-    (7, 8879, 'Suburban Lane', 'Anderson','SC', 29621, 1);
-    
--- insert into pickup
-insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (3, 1); 
-insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (5, 1);
+-- insert into delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_ZIP, delivery_IsDelivered) values
+--     (4, 115, 'Party Blvd', 'Anderson', 'SC', 29621, 1),
+--     (6, 6745, 'Wessex St', 'Anderson', 'SC', 29621, 1),
+--     (7, 8879, 'Suburban Lane', 'Anderson','SC', 29621, 1);
+--     
+-- -- insert into pickup
+-- insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (3, 1); 
+-- insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (5, 1);
 
--- insert into pickup
-insert into dinein (ordertable_OrderID, dinein_TableNum) values (1, 21);
-insert into dinein (ordertable_OrderID, dinein_TableNum) values (2, 4);
+-- -- insert into dinein
+-- insert into dinein (ordertable_OrderID, dinein_TableNum) values (1, 21);
+-- insert into dinein (ordertable_OrderID, dinein_TableNum) values (2, 4);
