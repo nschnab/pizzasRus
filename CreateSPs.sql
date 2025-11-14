@@ -1,4 +1,4 @@
-USE PizzaDB;
+/* USE PizzaDB;
 
 DELIMITER %%
 CREATE PROCEDURE AddCustomerIfNotExists (
@@ -137,3 +137,4 @@ BEGIN
     WHERE ordertable_OrderID = NEW.ordertable_OrderID;  
 END $$
 DELIMITER ;
+*/
