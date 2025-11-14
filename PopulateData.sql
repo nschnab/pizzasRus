@@ -1,7 +1,7 @@
 USE PizzaDB;
 
 -- Insert values into the topping table
-INSERT INTO topping (topping_topName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT) VALUES
+INSERT INTO topping (topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT) VALUES
 ('Bacon', 1, 1.5, 2, 3, 1.5, 0.25, 0, 89),
 ('Banana Peppers', 0.6, 1, 1.3, 1.75, 0.5, 0.05, 0, 36),
 ('Black Olives', 0.75, 1, 1.5, 2, 0.6, 0.1, 25, 39),
@@ -49,35 +49,37 @@ INSERT INTO baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice,
 ('XLarge', 'Gluten-Free', 12.5, 6);
 
 -- insert into ordertable
-INSERT INTO ordertable (ordertable_OrderID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) VALUES
- (1, 'dinein', '2025-01-05 12:03:00', 19.75, 3.68, 1),
- (2, 'dinein', '2025-02-03 12:05:00', 19.78, 4.63, 1),
- (3, 'pickup', '2025-01-03 21:30:00', 89.28, 19.8, 1),
- (4, 'delivery', '2025-02-20 19:11:00', 68.95, 17.39, 1),
- (5, 'pickup', '2025-01-02 17:30:00', 28.7, 7.84, 1),
- (6, 'delivery', '2025-01-02 18:17:00', 25.81, 3.64, 1),
- (7, 'delivery', '2025-02-13 20:32:00', 31.66, 6, 1);
+INSERT INTO ordertable 
+(ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
+VALUES
+('dinein', '2025-01-05 12:03:00', 0, 0, 1), -- OrderID = 1
+('dinein', '2025-02-03 12:05:00', 0, 0, 1), -- OrderID = 2
+('pickup', '2025-01-03 21:30:00', 0, 0, 1), -- OrderID = 3
+('delivery', '2025-02-20 19:11:00', 0, 0, 1), -- OrderID = 4
+('pickup', '2025-01-02 17:30:00', 0, 0, 1), -- OrderID = 5
+('delivery', '2025-01-02 18:17:00', 0, 0, 1), -- OrderID = 6
+('delivery', '2025-02-13 20:32:00', 0, 0, 1); -- OrderID = 7
 
 -- Create orders
 
 -- insert into pizza
-insert into pizza (ordertable_orderID, pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice) values
- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
- (3,'Large','Original','completed','2025-01-03 21:30:00',14.88,3.3),
- (6,'Large','Thin','completed','2025-01-02 18:17:00',25.81,3.64),
- (1,'Large','Thin','completed','2025-01-05 12:03:00',19.75,3.68),
- (7,'Large','Thin','completed','2025-02-13 20:32:00',18,2.75),
- (7,'Large','Thin','completed','2025-02-13 20:32:00',19.25,3.25),
- (2,'Medium','Pan','completed','2025-02-03 12:05:00',13.85,3.23),
- (2,'Small','Original','completed','2025-02-03 12:05:00',6.93,1.4),
- (5,'XLarge','Gluten-Free','completed','2025-01-02 17:30:00',28.7,7.84),
- (4,'XLarge','Original','completed','2025-02-20 19:11:00',26.75,5.55),
- (4,'XLarge','Original','completed','2025-02-20 19:11:00',27.94,5.59),
- (4,'XLarge','Original','completed','2025-02-20 19:11:00',31.5,6.25);
+INSERT INTO pizza VALUES
+    (1, 'Large', 'Thin', 'Completed', '2025-01-05 12:03:00', 19.75, 3.68, 1),
+    (2, 'Medium', 'Pan', 'Completed', '2025-02-03 12:05:00', 12.85, 3.23, 2),
+    (3, 'Small', 'Original', 'Completed', '2025-02-03 12:05:00', 6.93, 1.40, 2),
+    (4, 'Large', 'Original', 'Completed', '2025-01-03 21:30:00', 14.88, 3.30, 3),
+    (5, 'Large', 'Original', 'Completed', '2025-01-03 21:30:00', 14.88, 3.30, 3),
+    (6, 'Large', 'Original', 'Completed', '2025-01-03 21:30:00', 14.88, 3.30, 3),
+    (7, 'Large', 'Original', 'Completed', '2025-01-03 21:30:00', 14.88, 3.30, 3),
+    (8, 'Large', 'Original', 'Completed', '2025-01-03 21:30:00', 14.88, 3.30, 3),
+    (9, 'Large', 'Original', 'Completed', '2025-01-03 21:30:00', 14.88, 3.30, 3),
+    (10, 'XLarge', 'Original', 'Completed', '2025-02-20 19:11:00', 27.94, 5.59, 4),
+    (11, 'XLarge', 'Original', 'Completed', '2025-02-20 19:11:00', 31.50, 6.25, 4),
+    (12, 'XLarge', 'Original', 'Completed', '2025-02-20 19:11:00', 26.75, 5.55, 4),
+    (13, 'XLarge', 'Gluten-Free', 'Completed', '2025-01-02 17:30:00', 28.70, 7.84, 5),
+    (14, 'Large', 'Thin', 'Completed', '2025-01-02 18:17:00', 25.81, 3.64, 6),
+    (15, 'Large', 'Thin', 'Completed', '2025-02-13 20:32:00', 18.00, 2.75, 7),
+    (16, 'Large', 'Thin', 'Completed', '2025-02-13 20:32:00', 19.25, 3.25, 7);
 
 -- insert into customer
 INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES
@@ -99,3 +101,51 @@ insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (5, 1);
 -- insert into dinein
 insert into dinein (ordertable_OrderID, dinein_TableNum) values (1, 21);
 insert into dinein (ordertable_OrderID, dinein_TableNum) values (2, 4);
+
+INSERT INTO pizza_topping VALUES
+    (1, 13, 1),
+    (1, 1, 0),
+    (1, 2, 0),
+    (2, 15, 0),
+    (2, 9, 0),
+    (2, 7, 0),
+    (2, 8, 0),
+    (2, 12, 0),
+    (3, 13, 0),
+    (3, 4, 0),
+    (3, 12, 0),
+    (4, 13, 0),
+    (4, 1, 0),
+    (5, 13, 0),
+    (5, 1, 0),
+    (6, 13, 0),
+    (6, 1, 0),
+    (7, 1, 0),
+    (7, 13, 0),
+    (8, 1, 0),
+    (8, 13, 0),
+    (9, 1, 0),
+    (9, 13, 0),
+    (10, 1, 0),
+    (10, 2, 0),
+    (10, 14, 0),
+    (11, 3, 1),
+    (11, 10, 1),
+    (11, 14, 0),
+    (12, 4, 0),
+    (12, 17, 0),
+    (12, 14, 0),
+    (13, 5, 0),
+    (13, 6, 0),
+    (13, 7, 0),
+    (13, 8, 0),
+    (13, 9, 0),
+    (13, 16, 0),
+    (14, 4, 0),
+    (14, 5, 0),
+    (14, 6, 0),
+    (14, 8, 0),
+    (14, 14, 1),
+    (15, 14, 1),
+    (16, 13, 0),
+    (16, 1, 1);
