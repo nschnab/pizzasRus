@@ -1,3 +1,4 @@
+USE PizzaDB;
 
 DROP TABLE pizza_topping;
 DROP TABLE topping;
