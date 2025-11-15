@@ -4,13 +4,13 @@ SELECT
     t.topping_TopName AS Topping,
     SUM(
         CASE 
-            WHEN pt.pizza_topping_IsDouble = 1 THEN 2 
+            WHEN pt.pizza_topping_IsDouble = true THEN 2 
             ELSE 1 
         END
     ) AS ToppingCount
 FROM topping t
-JOIN pizza_topping pt
-    ON pt.topping_TopID = t.topping_TopID
+JOIN pizza_topping pt 
+	ON pt.topping_TopID = t.topping_TopID
 JOIN pizza p
     ON p.pizza_PizzaID = pt.pizza_PizzaID
 GROUP BY t.topping_TopName
@@ -26,7 +26,7 @@ SELECT
     DATE_FORMAT(p.pizza_PizzaDate, '%c/%Y') AS OrderMonth
 FROM pizza p
 GROUP BY p.pizza_Size, p.pizza_CrustType, OrderMonth
-ORDER BY Profit DESC;
+ORDER BY Profit asc;
 
 
 -- DROP VIEW IF EXISTS ProfitByOrderType;
