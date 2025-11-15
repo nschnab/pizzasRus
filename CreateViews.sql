@@ -17,7 +17,7 @@ GROUP BY t.topping_TopName
 ORDER BY ToppingCount DESC, Topping;
 
 
--- DROP VIEW IF EXISTS ProfitByPizza;
+DROP VIEW IF EXISTS ProfitByPizza;
 CREATE VIEW ProfitByPizza AS
 SELECT
     p.pizza_Size AS Size,
@@ -31,25 +31,35 @@ ORDER BY Profit DESC;
 
 -- DROP VIEW IF EXISTS ProfitByOrderType;
 CREATE VIEW ProfitByOrderType AS
-SELECT * FROM (
-    SELECT 
+SELECT
+    CustomerType,
+    CASE 
+        WHEN MonthStart = '9999-12-01' THEN 'Grand Total'
+        ELSE DATE_FORMAT(MonthStart, '%c/%Y')
+    END AS OrderMonth,
+    TotalOrderPrice,
+    TotalOrderCost,
+    Profit
+FROM (
+    SELECT
         o.ordertable_OrderType AS CustomerType,
-        DATE_FORMAT(o.ordertable_OrderDateTime, '%m/%Y') AS OrderMonth,
+        DATE_FORMAT(o.ordertable_OrderDateTime, '%Y-%m-01') + INTERVAL 0 DAY AS MonthStart,
         SUM(o.ordertable_CustPrice) AS TotalOrderPrice,
         SUM(o.ordertable_BusPrice) AS TotalOrderCost,
         SUM(o.ordertable_CustPrice - o.ordertable_BusPrice) AS Profit
     FROM ordertable o
-    GROUP BY o.ordertable_OrderType, OrderMonth
+    GROUP BY o.ordertable_OrderType, MonthStart
 
     UNION ALL
 
-    SELECT 
+    SELECT
         '' AS CustomerType,
-        'Grand Total' AS OrderMonth,
+        '9999-12-01' AS MonthStart,
         SUM(o.ordertable_CustPrice) AS TotalOrderPrice,
         SUM(o.ordertable_BusPrice) AS TotalOrderCost,
         SUM(o.ordertable_CustPrice - o.ordertable_BusPrice) AS Profit
     FROM ordertable o
 ) AS combined
-ORDER BY CustomerType;
+ORDER BY CustomerType ASC, MonthStart DESC;
+
 
