@@ -2,17 +2,16 @@ drop view if exists ToppingPopularity;
 CREATE VIEW ToppingPopularity AS
 SELECT 
     t.topping_TopName AS Topping,
-    SUM(
+    COALESCE(SUM(
         CASE 
+            WHEN pt.pizza_topping_IsDouble IS NULL THEN 0
             WHEN pt.pizza_topping_IsDouble = true THEN 2 
             ELSE 1 
         END
-    ) AS ToppingCount
+    ), 0) AS ToppingCount
 FROM topping t
-JOIN pizza_topping pt 
-	ON pt.topping_TopID = t.topping_TopID
-JOIN pizza p
-    ON p.pizza_PizzaID = pt.pizza_PizzaID
+LEFT JOIN pizza_topping pt 
+    ON pt.topping_TopID = t.topping_TopID
 GROUP BY t.topping_TopName
 ORDER BY ToppingCount DESC, Topping;
 
@@ -29,7 +28,7 @@ GROUP BY p.pizza_Size, p.pizza_CrustType, OrderMonth
 ORDER BY Profit asc;
 
 
--- DROP VIEW IF EXISTS ProfitByOrderType;
+DROP VIEW IF EXISTS ProfitByOrderType;
 CREATE VIEW ProfitByOrderType AS
 SELECT
     CustomerType,
@@ -60,6 +59,6 @@ FROM (
         SUM(o.ordertable_CustPrice - o.ordertable_BusPrice) AS Profit
     FROM ordertable o
 ) AS combined
-ORDER BY CustomerType ASC, MonthStart DESC;
+ORDER BY CustomerType desc, MonthStart asc;
 
 

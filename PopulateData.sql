@@ -149,6 +149,7 @@ insert into pizza_topping (pizza_PizzaID, topping_TopID, pizza_topping_IsDouble)
     (11, 6, false),
     (12, 12, false),
     (12, 1, false),
+    (12, 6, false),
     -- order 5
     (13, 8, false),
     (13, 12, false),
