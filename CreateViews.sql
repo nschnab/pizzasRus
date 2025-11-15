@@ -1,15 +1,23 @@
 drop view if exists ToppingPopularity;
-create view ToppingPopularity as
-select 
-	topping_TopName as "Topping", 
-	count(*) as `ToppingCount`
-from topping t
-join pizza_topping pt on pt.topping_TopID = t.topping_TopID
-join pizza p on p.pizza_pizzaID = tp.pizza_pizzaID
-group by t.topping_TopName
-order by `ToppingCount` desc, topping_TopName;
+CREATE VIEW ToppingPopularity AS
+SELECT 
+    t.topping_TopName AS Topping,
+    SUM(
+        CASE 
+            WHEN pt.pizza_topping_IsDouble = 1 THEN 2 
+            ELSE 1 
+        END
+    ) AS ToppingCount
+FROM topping t
+JOIN pizza_topping pt
+    ON pt.topping_TopID = t.topping_TopID
+JOIN pizza p
+    ON p.pizza_PizzaID = pt.pizza_PizzaID
+GROUP BY t.topping_TopName
+ORDER BY ToppingCount DESC, Topping;
 
-drop view if exists ProfitByPizza;
+
+-- drop view if exists ProfitByPizza;
 CREATE VIEW ProfitByPizza AS
 SELECT 
     p.pizza_Size AS Size,
@@ -22,7 +30,7 @@ JOIN discount d ON d.discount_DiscountID = pd.discount_DiscountID
 group by `OrderMonth`;
 
 
-DROP VIEW IF EXISTS ProfitByOrderType;
+-- DROP VIEW IF EXISTS ProfitByOrderType;
 CREATE VIEW ProfitByOrderType AS
 SELECT * FROM (
     SELECT 

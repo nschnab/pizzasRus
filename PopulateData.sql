@@ -1,5 +1,3 @@
-
-
 -- Insert values into the topping table
 INSERT INTO topping (topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT) VALUES
 ('Bacon', 1, 1.5, 2, 3, 1.5, 0.25, 0, 89),
@@ -114,3 +112,58 @@ insert into pickup (ordertable_OrderID, pickup_IsPickedUp) values (5, 1);
 -- insert into dinein
 insert into dinein (ordertable_OrderID, dinein_TableNum) values (1, 21);
 insert into dinein (ordertable_OrderID, dinein_TableNum) values (2, 4);
+
+insert into pizza_topping (pizza_PizzaID, topping_TopID, pizza_topping_IsDouble) values 
+	-- order 1
+	(1, 15, true),
+    (1, 13, false),
+    (1, 17, false),
+    -- order 2
+    (2, 5, false),
+    (2, 3, false),
+    (2, 16, false),
+    (2, 11, false),
+    (2, 2, false),
+    (3, 15, false),
+    (3, 4, false),
+    (3, 2, false),
+    -- order 3, 6 pepperoni
+    (4, 15, false),
+    (4, 13, false),
+    (5, 15, false),
+    (5, 13, false),
+    (6, 15, false),
+    (6, 13, false),
+    (7, 15, false),
+    (7, 13, false),
+    (8, 15, false),
+    (8, 13, false),
+    (9, 15, false),
+    (9, 13, false),
+    -- order 4
+    (10, 17, false),
+    (10, 13, false),
+    (10, 6, false),
+    (11, 9, true),
+    (11, 14, true),
+    (11, 6, false),
+    (12, 12, false),
+    (12, 1, false),
+    -- order 5
+    (13, 8, false),
+    (13, 12, false),
+    (13, 16, false),
+    (13, 11, false),
+    (13, 3, false),
+    (13, 7, false),
+    -- order 6
+    (14, 4, false),
+    (14, 8, false),
+    (14, 12, false),
+    (14, 11, false),
+    (14, 6, true),
+    -- order 7
+    (15, 6, true),
+    (16, 15, false),
+    (16, 13, true);
+    
