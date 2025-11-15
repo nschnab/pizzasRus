@@ -17,17 +17,16 @@ GROUP BY t.topping_TopName
 ORDER BY ToppingCount DESC, Topping;
 
 
--- drop view if exists ProfitByPizza;
+-- DROP VIEW IF EXISTS ProfitByPizza;
 CREATE VIEW ProfitByPizza AS
-SELECT 
+SELECT
     p.pizza_Size AS Size,
     p.pizza_CrustType AS Crust,
-    (p.pizza_CustPrice - p.pizza_BusPrice) * d.discount_Amount AS Profit,
-    DATE_FORMAT(p.pizza_PizzaDate, '%m/%Y') AS `OrderMonth`
+    SUM(p.pizza_CustPrice - p.pizza_BusPrice) AS Profit,
+    DATE_FORMAT(p.pizza_PizzaDate, '%c/%Y') AS OrderMonth
 FROM pizza p
-JOIN pizza_discount pd ON pd.pizza_PizzaID = p.pizza_PizzaID
-JOIN discount d ON d.discount_DiscountID = pd.discount_DiscountID
-group by `OrderMonth`;
+GROUP BY p.pizza_Size, p.pizza_CrustType, OrderMonth
+ORDER BY Profit DESC;
 
 
 -- DROP VIEW IF EXISTS ProfitByOrderType;
