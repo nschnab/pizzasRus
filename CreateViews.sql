@@ -32,33 +32,39 @@ DROP VIEW IF EXISTS ProfitByOrderType;
 CREATE VIEW ProfitByOrderType AS
 SELECT
     CustomerType,
-    CASE 
-        WHEN MonthStart = '9999-12-01' THEN 'Grand Total'
-        ELSE DATE_FORMAT(MonthStart, '%c/%Y')
-    END AS OrderMonth,
+    OrderMonth,
     TotalOrderPrice,
     TotalOrderCost,
     Profit
 FROM (
     SELECT
         o.ordertable_OrderType AS CustomerType,
-        DATE_FORMAT(o.ordertable_OrderDateTime, '%Y-%m-01') + INTERVAL 0 DAY AS MonthStart,
+        DATE_FORMAT(o.ordertable_OrderDateTime, '%c/%Y') AS OrderMonth,
         SUM(o.ordertable_CustPrice) AS TotalOrderPrice,
         SUM(o.ordertable_BusPrice) AS TotalOrderCost,
-        SUM(o.ordertable_CustPrice - o.ordertable_BusPrice) AS Profit
+        SUM(o.ordertable_CustPrice - o.ordertable_BusPrice) AS Profit,
+        (YEAR(o.ordertable_OrderDateTime) * 100 + MONTH(o.ordertable_OrderDateTime)) AS YM
     FROM ordertable o
-    GROUP BY o.ordertable_OrderType, MonthStart
-
+    GROUP BY o.ordertable_OrderType, YEAR(o.ordertable_OrderDateTime), MONTH(o.ordertable_OrderDateTime)
     UNION ALL
-
     SELECT
         '' AS CustomerType,
-        '9999-12-01' AS MonthStart,
-        SUM(o.ordertable_CustPrice) AS TotalOrderPrice,
-        SUM(o.ordertable_BusPrice) AS TotalOrderCost,
-        SUM(o.ordertable_CustPrice - o.ordertable_BusPrice) AS Profit
-    FROM ordertable o
+        'Grand Total' AS OrderMonth,
+        SUM(ordertable_CustPrice) AS TotalOrderPrice,
+        SUM(ordertable_BusPrice) AS TotalOrderCost,
+        SUM(ordertable_CustPrice - ordertable_BusPrice) AS Profit,
+        -1 AS YM
+    FROM ordertable
 ) AS combined
-ORDER BY CustomerType desc, MonthStart asc;
-
-
+ORDER BY
+    CASE CustomerType
+        WHEN 'dinein' THEN 1
+        WHEN 'delivery' THEN 2
+        WHEN 'pickup' THEN 3
+        WHEN '' THEN 4
+        ELSE 5
+    END,
+    CASE
+        WHEN CustomerType = 'delivery' THEN YM        -- delivery: ascending
+        ELSE -YM                                     -- dinein & pickup: descending
+    END;

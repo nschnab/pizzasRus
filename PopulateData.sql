@@ -50,13 +50,13 @@ INSERT INTO baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice,
 INSERT INTO ordertable
 (ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
 VALUES
-('dinein',    '2025-01-05 12:03:00', 19.75, 3.68, 1),
-('dinein',    '2025-02-03 12:05:00', 19.78, 4.63, 1),
-('pickup',    '2025-01-03 21:30:00', 89.28, 19.8, 1),
-('delivery',  '2025-02-20 19:11:00', 68.95, 17.39, 1),
-('pickup',    '2025-01-02 17:30:00', 28.7, 7.84, 1),
-('delivery',  '2025-01-02 18:17:00', 25.81, 3.64, 1),
-('delivery',  '2025-02-13 20:32:00', 31.66, 6, 1);
+('dinein',    '2025-01-05 12:03:00', 19.75 * 0.5, 3.68, 1),
+('dinein',    '2025-02-03 12:05:00', 19.78 * 0.5, 4.63, 1),
+('pickup',    '2025-01-03 21:30:00', 89.28 * 0.5, 19.8, 1),
+('delivery',  '2025-02-20 19:11:00', 68.95 * 0.5, 17.39, 1),
+('pickup',    '2025-01-02 17:30:00', 28.7 * 0.5, 7.84, 1),
+('delivery',  '2025-01-02 18:17:00', 25.81 * 0.5, 3.64, 1),
+('delivery',  '2025-02-13 20:32:00', 31.66 * 0.5, 6, 1);
 
 -- Create orders
 
