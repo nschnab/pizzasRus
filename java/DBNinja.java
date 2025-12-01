@@ -111,8 +111,25 @@ public final class DBNinja {
 		 * This method adds a new customer to the database.
 		 * 
 		 */
+         connect_to_db();
 
-		 return -1;
+         String query = "INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES (?, ?, ?)";
+
+         PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+         stmt.setString(1, c.getFName());
+         stmt.setString(2, c.getLName());
+         stmt.setString(3, c.getPhone());
+
+         stmt.executeUpdate();
+
+         stmt.close();
+         conn.close();
+
+         ResultSet rs = stmt.getGeneratedKeys();
+         if (rs.next()) {
+             return rs.getInt(1);
+         }
+         return -1;
 	}
 
 	public static void completeOrder(int OrderID, order_state newState ) throws SQLException, IOException
@@ -200,7 +217,32 @@ public final class DBNinja {
 		 * Don't forget to order the data coming from the database appropriately.
 		 * 
 		*/
-		return null;
+        connect_to_db();
+
+        ArrayList<Customer> customerList = new ArrayList<Customer>();
+
+        String query = "SELECT customer_CustID, customer_FName, customer_LName, customer_PhoneNum FROM customer ORDER BY customer_CustID";
+
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.executeQuery();
+
+        ResultSet rs = stmt.getResultSet();
+
+        while (rs.next()) {
+            int custID = rs.getInt("customer_CustID");
+            String fName = rs.getString("customer_FName");
+            String lName = rs.getString("customer_LName");
+            String phone = rs.getString("customer_PhoneNum");
+
+            Customer c = new Customer(custID, fName, lName, phone);
+            customerList.add(c);
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return customerList;
 	}
 
 	public static Customer findCustomerByPhone(String phoneNumber)  throws SQLException, IOException 
