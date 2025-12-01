@@ -85,7 +85,28 @@ public final class DBNinja {
 		 * 
 		 */
 
+        connect_to_db();
 
+        String query = "INSERT INTO ordertable" +
+                "(ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)" +
+                "VALUES" +
+                "(?, ?, ?, ?, ?)";
+
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, o.getOrderType());
+        stmt.setString(2, o.getDate());
+        stmt.setDouble(3, o.getCustPrice());
+        stmt.setDouble(4, o.getBusPrice());
+        stmt.setBoolean(5, o.getIsComplete());
+
+        ArrayList<Pizza> pizzaList = o.getPizzaList();
+
+        java.util.Date d = o.getDate();
+
+        for(int i = 0; i < pizzaList.size(); i++)
+        {
+            addPizza();
+        }
 	}
 	
 	public static int addPizza(java.util.Date d, int orderID, Pizza p) throws SQLException, IOException
@@ -113,7 +134,11 @@ public final class DBNinja {
 		 */
          connect_to_db();
 
-         String query = "INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES (?, ?, ?)";
+         String query =
+                 "INSERT INTO customer " +
+                    "(customer_FName, customer_LName, customer_PhoneNum) " +
+                 "VALUES " +
+                    "(?, ?, ?)";
 
          PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
          stmt.setString(1, c.getFName());
@@ -121,15 +146,17 @@ public final class DBNinja {
          stmt.setString(3, c.getPhone());
 
          stmt.executeUpdate();
+         ResultSet rs = stmt.getGeneratedKeys();
+
+         int id = -1;
+         if (rs.next()) {
+             id = rs.getInt(1);
+         }
 
          stmt.close();
          conn.close();
 
-         ResultSet rs = stmt.getGeneratedKeys();
-         if (rs.next()) {
-             return rs.getInt(1);
-         }
-         return -1;
+         return id;
 	}
 
 	public static void completeOrder(int OrderID, order_state newState ) throws SQLException, IOException
@@ -217,16 +244,15 @@ public final class DBNinja {
 		 * Don't forget to order the data coming from the database appropriately.
 		 * 
 		*/
+
         connect_to_db();
 
         ArrayList<Customer> customerList = new ArrayList<Customer>();
 
         String query = "SELECT customer_CustID, customer_FName, customer_LName, customer_PhoneNum FROM customer ORDER BY customer_CustID";
 
-        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        stmt.executeQuery();
-
-        ResultSet rs = stmt.getResultSet();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
 
         while (rs.next()) {
             int custID = rs.getInt("customer_CustID");
@@ -365,7 +391,34 @@ public final class DBNinja {
 		 * Build an ArrayList of all the Pizzas associated with the Order.
 		 * 
 		 */
-		return null;
+        connect_to_db();
+        String query = "select pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_orderID from pizza where ordertable_orderID = ?";
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.setInt(1, o.getOrderID());
+
+        stmt.executeQuery();
+
+        ArrayList<Pizza> pizzaList = new ArrayList<Pizza>();
+
+        ResultSet rs = stmt.getGeneratedKeys();
+
+        while(rs.next())
+        {
+            int id = rs.getInt("pizza_PizzaID");
+            String pizza_Size  = rs.getString("pizza_Size");
+            String pizza_CrustType = rs.getString("pizza_CrustType");
+            String pizza_PizzaState = rs.getString("pizza_PizzaState");
+            String pizza_PizzaDate = rs.getString("pizza_PizzaDate");
+            double pizza_CustPrice = rs.getDouble("pizza_PizzaPrice");
+            double pizza_BusPrice = rs.getDouble("pizza_PizzaBusPrice");
+            int ordertable_orderID = rs.getInt("ordertable_orderID");
+
+            Pizza p = new Pizza(id, pizza_Size, pizza_CrustType, ordertable_orderID, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice);
+            pizzaList.add(p);
+        }
+
+
+		return pizzaList;
 	}
 
 	public static ArrayList<Discount> getDiscounts(Order o) throws SQLException, IOException 
