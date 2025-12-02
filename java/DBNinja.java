@@ -111,31 +111,36 @@ public final class DBNinja {
 
         if((o.getOrderType()).equals("dinein"))
         {
+            DineinOrder dine = (DineinOrder)o;
             query = "insert into dinein " +
                 "(ordertable_OrderID, dinein_TableNum) " +
                 "values (?, ?)";
             stmt2 = conn.prepareStatement(query);
             stmt2.setInt(1, o.getOrderID());
-//            stmt2.setInt(2, getTa); FIX ME PLZ
+            stmt2.setInt(2, dine.getTableNum());
+            stmt2.executeUpdate();
         }
         else if((o.getOrderType()).equals("pickup"))
         {
+            PickupOrder pickup = (PickupOrder)o;
             query = "insert into pickup " +
                     "(ordertable_OrderID, pickup_IsPickedUp) " +
                     "values (?, ?)";
             stmt2 = conn.prepareStatement(query);
             stmt2.setInt(1, o.getOrderID());
-            stmt2.setInt(2, 0);
+            stmt2.setBoolean(2, pickup.getIsPickedUp());
 
         }
         else
         {
+            DeliveryOrder delivery = (DeliveryOrder)o;
             query = "insert into delivery " +
                     "(ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_ZIP, delivery_IsDelivered) " +
                     "values (?, ?, ?, ?, ?, ?, ?)";
             stmt2 = conn.prepareStatement(query);
             stmt2.setInt(1, o.getOrderID());
-//            stmt2.setInt(2, );
+            //6745	Wessex St	Anderson	SC	29621
+            stmt2.setString(2, (delivery.getAddress()));
         }
 
         conn.close();
@@ -357,9 +362,7 @@ public final class DBNinja {
         PreparedStatement stmt = conn.prepareStatement(query);
         ResultSet rs = stmt.executeQuery();
 
-        Order o;
-
-        conn.close();
+        Order o = null;
 
         if(rs.next())
         {
@@ -372,9 +375,9 @@ public final class DBNinja {
             boolean complete = rs.getBoolean(7);
 
             o = new Order(orderID, customerID, orderType, orderDate, custPrice, busPrice, complete);
-            return o;
         }
-        return null;
+        conn.close();
+        return o;
 	}
 
 	public static ArrayList<Order> getOrdersByDate(String date) throws SQLException, IOException
@@ -394,8 +397,7 @@ public final class DBNinja {
 
          ArrayList<Order> orders = new ArrayList<>();
 
-
-         conn.close();
+         Order o = null;
 
          while(rs.next())
          {
@@ -407,9 +409,11 @@ public final class DBNinja {
              double busPrice = rs.getDouble(6);
              boolean complete = rs.getBoolean(7);
 
-             Order o = new Order(orderID, customerID, orderType, orderDate, custPrice, busPrice, complete);
+             o = new Order(orderID, customerID, orderType, orderDate, custPrice, busPrice, complete);
              orders.add(o);
          }
+
+         conn.close();
          return orders;
 	}
 		
@@ -461,19 +465,19 @@ public final class DBNinja {
         stmt.setString(1, name);
         ResultSet rs = stmt.executeQuery();
 
-        conn.close();
+        Discount d = null;
 
         if(rs.next())
         {
-            Discount d = new Discount(
+            d = new Discount(
                     rs.getInt("discount_DiscountID"),
                     rs.getString("discount_DiscountName"),
                     rs.getDouble("discount_Amount"),
                     rs.getBoolean("discount_IsPercent")
             );
-            return d;
         }
-        return null;
+        conn.close();
+        return d;
 	}
 
 
@@ -524,15 +528,16 @@ public final class DBNinja {
         stmt.setString(1, phoneNumber);
         ResultSet rs = stmt.executeQuery();
 
+        Customer c = null;
         if (rs.next()) {
             int custID = rs.getInt("customer_CustID");
             String fName = rs.getString("customer_FName");
             String lName = rs.getString("customer_LName");
             String phone = rs.getString("customer_PhoneNum");
-            Customer c = new Customer(custID, fName, lName, phone);
-            return c;
+            c = new Customer(custID, fName, lName, phone);
         }
-		 return null;
+        conn.close();
+		 return c;
 	}
 
 	public static String getCustomerName(int CustID) throws SQLException, IOException 
@@ -652,8 +657,7 @@ public final class DBNinja {
         stmt.setString(1, name);
         ResultSet rs = stmt.executeQuery();
 
-        Topping t = new Topping();
-        boolean test = false;
+        Topping t = null;
 
         if (rs.next()) {
             t = new Topping(
@@ -668,16 +672,10 @@ public final class DBNinja {
                     rs.getInt("topping_MinINVT"),
                     rs.getInt("topping_CurINVT")
             );
-            test = true;
         }
 
         conn.close();
-
-        if(test)
-        {
-            return t;
-        }
-        return null;
+        return t;
 	}
 
 	public static ArrayList<Topping> getToppingsOnPizza(Pizza p) throws SQLException, IOException 

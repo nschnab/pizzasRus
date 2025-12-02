@@ -1,22 +1,22 @@
 -- Insert values into the topping table
 INSERT INTO topping (topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT) VALUES
-('Bacon', 1, 1.5, 2, 3, 1.5, 0.25, 0, 89),
-('Banana Peppers', 0.6, 1, 1.3, 1.75, 0.5, 0.05, 0, 36),
-('Black Olives', 0.75, 1, 1.5, 2, 0.6, 0.1, 25, 39),
-('Chicken', 1.5, 2, 2.25, 3, 1.75, 0.25, 25, 56),
-('Feta Cheese', 1.75, 3, 4, 5.5, 1.5, 0.18, 0, 75),
-('Four Cheese Blend', 2, 3.5, 5, 7, 1, 0.15, 25, 150),
-('Goat Cheese', 1.6, 2.75, 4, 5.5, 1.5, 0.2, 0, 54),
-('Green Pepper', 1, 1.5, 2, 2.5, 0.5, 0.02, 25, 79),
-('Ham', 2, 2.5, 3.25, 4, 1.5, 0.15, 25, 78),
-('Jalapenos', 0.5, 0.75, 1.25, 1.75, 0.5, 0.05, 0, 64),
-('Mushrooms', 1.5, 2, 2.5, 3, 0.75, 0.1, 50, 52),
-('Onion', 1, 1.5, 2, 2.75, 0.5, 0.02, 25, 85),
 ('Pepperoni', 2, 2.75, 3.5, 4.5, 1.25, 0.2, 50, 100),
-('Pineapple', 1, 1.25, 1.75, 2, 1, 0.25, 0, 15),
-('Regular Cheese', 2, 3.5, 5, 7, 0.5, 0.12, 50, 250),
+('Sausage', 2.5, 3, 3.5, 4.25, 1.25, 0.15, 50, 100),
+('Ham', 2, 2.5, 3.25, 4, 1.5, 0.15, 25, 78),
+('Chicken', 1.5, 2, 2.25, 3, 1.75, 0.25, 25, 56),
+('Green Pepper', 1, 1.5, 2, 2.5, 0.5, 0.02, 25, 79),
+('Onion', 1, 1.5, 2, 2.75, 0.5, 0.02, 25, 85),
 ('Roma Tomato', 2, 3, 3.5, 4.5, 0.75, 0.03, 10, 86),
-('Sausage', 2.5, 3, 3.5, 4.25, 1.25, 0.15, 50, 100);
+('Mushrooms', 1.5, 2, 2.5, 3, 0.75, 0.1, 50, 52),
+('Black Olives', 0.75, 1, 1.5, 2, 0.6, 0.1, 25, 39),
+('Pineapple', 1, 1.25, 1.75, 2, 1, 0.25, 0, 15),
+('Jalapenos', 0.5, 0.75, 1.25, 1.75, 0.5, 0.05, 0, 64),
+('Banana Peppers', 0.6, 1, 1.3, 1.75, 0.5, 0.05, 0, 36),
+('Regular Cheese', 2, 3.5, 5, 7, 0.5, 0.12, 50, 250),
+('Four Cheese Blend', 2, 3.5, 5, 7, 1, 0.15, 25, 150),
+('Feta Cheese', 1.75, 3, 4, 5.5, 1.5, 0.18, 0, 75),
+('Goat Cheese', 1.6, 2.75, 4, 5.5, 1.5, 0.2, 0, 54),
+('Bacon', 1, 1.5, 2, 3, 1.5, 0.25, 0, 89);
 
 -- Insert values into discounts table
 INSERT INTO discount (discount_DiscountName, discount_Amount, discount_IsPercent) VALUES
