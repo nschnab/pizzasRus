@@ -87,9 +87,9 @@ public final class DBNinja {
 
         connect_to_db();
 
-        String query = "INSERT INTO ordertable" +
-                "(ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)" +
-                "VALUES" +
+        String query = "INSERT INTO ordertable " +
+                "(ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete) " +
+                "VALUES " +
                 "(?, ?, ?, ?, ?)";
 
         PreparedStatement stmt = conn.prepareStatement(query);
@@ -100,13 +100,27 @@ public final class DBNinja {
         stmt.setBoolean(5, o.getIsComplete());
 
         ArrayList<Pizza> pizzaList = o.getPizzaList();
-
-        java.util.Date d = o.getDate();
+        java.util.Date d = new java.util.Date();
 
         for(int i = 0; i < pizzaList.size(); i++)
         {
-            addPizza();
+            addPizza(d, o.getOrderID(), pizzaList.get(i));
         }
+
+        stmt.close();
+
+//        PreparedStatement stmt2;
+//
+//        if((o.getOrderType()).equals("dinein"))
+//        {
+//            query = "insert into dinein " +
+//                "(ordertable_OrderID, dinein_TableNum) " +
+//                "values (?, ?)";
+//            stmt2 = conn.prepareStatement(query);
+//            stmt2.setInt(1, o.getOrderID());
+//            stmt2.setInt(2, );
+//        }
+
 	}
 	
 	public static int addPizza(java.util.Date d, int orderID, Pizza p) throws SQLException, IOException
@@ -122,6 +136,23 @@ public final class DBNinja {
 		 * This method returns the id of the pizza just added.
 		 * 
 		 */
+        String query = "insert into pizza " +
+                "(pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_orderID)" +
+                " values " +
+                "(?,?,?,?,?,?,?)";
+
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.setString(1, p.getSize());
+        stmt.setString(2, p.getCrustType());
+        stmt.setString(3, p.getPizzaState());
+        stmt.setString(4, p.getPizzaDate());
+        stmt.setDouble(5, p.getCustPrice());
+        stmt.setDouble(6, p.getBusPrice());
+        stmt.setInt(7, orderID);
+
+        stmt.execute();
+        ResultSet rs = stmt.getGeneratedKeys();
+        if(rs.next()) return rs.getInt(1);
 
 		return -1;
 	}
@@ -427,7 +458,15 @@ public final class DBNinja {
 		 * Build an array list of all the Discounts associted with the Order.
 		 * 
 		 */
-
+        String query = "select * from discount where ordertable_orderID = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, o.getOrderID());
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<Discount> discounts = new ArrayList<Discount>();
+        while(rs.next())
+        {
+            discounts.add(rs.getInt(""))
+        }
 		return null;
 	}
 
