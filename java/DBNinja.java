@@ -459,15 +459,18 @@ public final class DBNinja {
 		 * 
 		 */
         String query = "select * from discount where ordertable_orderID = ?";
-        PreparedStatement stmt = conn.prepareStatement(query);
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         stmt.setInt(1, o.getOrderID());
-        ResultSet rs = stmt.executeQuery();
+        stmt.executeQuery();
+        ResultSet rs = stmt.getGeneratedKeys();
+
         ArrayList<Discount> discounts = new ArrayList<Discount>();
-        while(rs.next())
-        {
-            discounts.add(rs.getInt(""))
+        while(rs.next()) {
+            Discount d = new Discount(rs.getInt("discount_DiscountID"), rs.getString("discount_DiscountName"),
+                    rs.getDouble("discount_DiscountAmount"), rs.getBoolean("discount_IsPercent"));
+            discounts.add(d);
         }
-		return null;
+        return discounts;
 	}
 
 	public static ArrayList<Discount> getDiscounts(Pizza p) throws SQLException, IOException 
@@ -476,8 +479,20 @@ public final class DBNinja {
 		 * Build an array list of all the Discounts associted with the Pizza.
 		 * 
 		 */
-	
-		return null;
+        String query = "select * from discount where ordertable_orderID = ?";
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.setInt(1, p.getOrderID());
+        stmt.executeQuery();
+        ResultSet rs = stmt.getGeneratedKeys();
+
+        ArrayList<Discount> discounts = new ArrayList<Discount>();
+        while(rs.next()) {
+            Discount d = new Discount(rs.getInt("discount_DiscountID"), rs.getString("discount_DiscountName"),
+                    rs.getDouble("discount_DiscountAmount"), rs.getBoolean("discount_IsPercent"));
+            discounts.add(d);
+        }
+        return discounts;
+
 	}
 
 	public static double getBaseCustPrice(String size, String crust) throws SQLException, IOException 
