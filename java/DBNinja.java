@@ -101,13 +101,13 @@ public final class DBNinja {
 
         ResultSet rs = stmt.executeQuery();
 
-        ArrayList<Pizza> pizzaList = o.getPizzaList();
-        java.util.Date d = new java.util.Date();
-
-        for(int i = 0; i < pizzaList.size(); i++)
-        {
-            addPizza(d, o.getOrderID(), pizzaList.get(i));
-        }
+//        ArrayList<Pizza> pizzaList = o.getPizzaList();
+//        java.util.Date d = new java.util.Date();
+//
+//        for(int i = 0; i < pizzaList.size(); i++)
+//        {
+//            addPizza(d, o.getOrderID(), pizzaList.get(i));
+//        }
 
 //        PreparedStatement stmt2;
 //
@@ -120,8 +120,8 @@ public final class DBNinja {
 //            stmt2.setInt(1, o.getOrderID());
 //            stmt2.setInt(2, );
 //        }
-        conn.close();
 
+        conn.close();
 	}
 	
 	public static int addPizza(java.util.Date d, int orderID, Pizza p) throws SQLException, IOException
@@ -207,22 +207,44 @@ public final class DBNinja {
 		 * FOR newState = PICKEDUP: mark the pickup status
 		 * 
 		 */
-//        String query;
-//        String query2;
-//        if (newState == order_state.PREPARED) {
-//            query = "update table ordertable " +
-//                    "set ordertable_isComplete = ? " +
-//                    "where ordertable_OrderID = ?";
-//            query2 = "update table pizza " +
-//                    "set pizza_PizzaState = ? " +
-//                    "";
-//        }
-//        else if (newState == order_state.PICKEDUP) {
-//
-//        }
-//
-//        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        String query = "";
+        String query2 = "";
+        PreparedStatement stmt;
+        PreparedStatement stmt2;
 
+        if (newState == order_state.PREPARED) {
+            query = "update table ordertable " +
+                    "set ordertable_isComplete = 1 " +
+                    "where ordertable_OrderID = ?";
+            query2 = "update table pizza " +
+                    "set pizza_PizzaState = ? " +
+                    "where ordertable_OrderID = ?";
+            stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, OrderID);
+
+            stmt.executeUpdate();
+
+            stmt2 = conn.prepareStatement(query2, Statement.RETURN_GENERATED_KEYS);
+            stmt2.setString(1, "complete");
+            stmt2.setInt(2, OrderID);
+            stmt2.executeUpdate();
+        }
+        else if (newState == order_state.DELIVERED) {
+            query = "update table delivery " +
+                    "set delivery_IsDelivered = 1 " +
+                    "where ordertable_OrderID = ?";
+            stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, OrderID);
+            stmt.executeUpdate();
+        }
+        else {
+            query = "update table pickup " +
+                    "set pickup_IsPickedUp = 1 " +
+                    "where ordertable_OrderID = ?";
+            stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            stmt.setInt(1, OrderID);
+            stmt.executeUpdate();
+        }
 	}
 
 
@@ -617,17 +639,33 @@ public final class DBNinja {
 		 * This method builds an ArrayList of the toppings ON a pizza.
 		 * The list can then be added to the Pizza object elsewhere in the
 		 */
-//        String query = "select * from pizza_topping " +
-//                "where pizza_PizzaID = ?";
-//        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-//        stmt.setInt(1, p.getPizzaID());
-//        ResultSet rs = stmt.executeQuery();
-//        ArrayList<Topping> toppingList = new ArrayList<>();
-//
-//        while(rs.next())
-//        {
-//
-//        }
+        String query = "select * " +
+                "from topping " +
+                "where topping_TopID in ( " +
+                "select topping_TopID " +
+                "from pizza_topping " +
+                "where pizza_PizzaID = 1 " +
+                ")";
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.setInt(1, p.getPizzaID());
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<Topping> toppingList = new ArrayList<>();
+
+        while(rs.next())
+        {
+            Topping t = new Topping(
+                    rs.getInt("topping_TopID"),
+                    rs.getString("topping_TopName"),
+                    rs.getInt("topping_SmallAMT"),
+                    rs.getInt("topping_MedAMT"),
+                    rs.getInt("topping_LgAMT"),
+                    rs.getInt("topping_XLAMT"),
+                    rs.getDouble("topping_CustPrice"),
+                    rs.getDouble("topping_BusPrice"),
+                    rs.getInt("topping_MinINVT"),
+                    rs.getInt("topping_CurINVT")
+            );
+        }
 		return null;
 	}
 
@@ -637,7 +675,14 @@ public final class DBNinja {
 		 * Updates the quantity of the topping in the database by the amount specified.
 		 * 
 		 * */
+        connect_to_db();
 
+        String query = "update topping set topping_CurINVT = topping_CurINVT + ? where topping_TopID = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setDouble(1, quantity);
+        stmt.setInt(2, toppingID);
+        stmt.executeUpdate();
+        conn.close();
 	}
 	
 	
