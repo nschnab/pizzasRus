@@ -233,6 +233,24 @@ public final class DBNinja {
 		 * then return an Order object for that order.
 		 * NOTE...there will ALWAYS be a "last order"!
 		 */
+        String query = "SELECT ordertable_OrderID, customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete FROM ordertable ORDER BY ordertable_OrderID DESC LIMIT 1";
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.executeQuery();
+        ResultSet rs = stmt.getGeneratedKeys();
+
+        if(rs.next())
+        {
+            int orderID = rs.getInt(1);
+            int customerID = rs.getInt(2);
+            String orderType = rs.getString(3);
+            String date = rs.getString(4);
+            double custPrice = rs.getDouble(5);
+            double busPrice = rs.getDouble(6);
+            boolean complete = rs.getBoolean(7);
+
+            Order o = new Order(orderID, customerID, orderType, date, custPrice, busPrice, complete);
+            return o;
+        }
 		 return null;
 	}
 
@@ -243,7 +261,31 @@ public final class DBNinja {
 		 * and return a list of those orders.
 		 *  
 		 */
-		 return null;
+         connect_to_db();
+         String query = "SELECT ordertable_OrderID, customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete " +
+                 "FROM ordertable " +
+                 "WHERE DATE(ordertable_OrderDateTime) = ?";
+         PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+         stmt.setString(1, date);
+         stmt.executeQuery();
+         ResultSet rs = stmt.getGeneratedKeys();
+
+         ArrayList<Order> orders = new ArrayList<>();
+
+         while(rs.next())
+         {
+             int orderID = rs.getInt(1);
+             int customerID = rs.getInt(2);
+             String orderType = rs.getString(3);
+             String orderDate = rs.getString(4);
+             double custPrice = rs.getDouble(5);
+             double busPrice = rs.getDouble(6);
+             boolean complete = rs.getBoolean(7);
+
+             Order o = new Order(orderID, customerID, orderType, orderDate, custPrice, busPrice, complete);
+             orders.add(o);
+         }
+         return orders;
 	}
 		
 	public static ArrayList<Discount> getDiscountList() throws SQLException, IOException 
