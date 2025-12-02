@@ -92,12 +92,14 @@ public final class DBNinja {
                 "VALUES " +
                 "(?, ?, ?, ?, ?)";
 
-        PreparedStatement stmt = conn.prepareStatement(query);
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         stmt.setString(1, o.getOrderType());
         stmt.setString(2, o.getDate());
         stmt.setDouble(3, o.getCustPrice());
         stmt.setDouble(4, o.getBusPrice());
         stmt.setBoolean(5, o.getIsComplete());
+
+        ResultSet rs = stmt.executeQuery();
 
         ArrayList<Pizza> pizzaList = o.getPizzaList();
         java.util.Date d = new java.util.Date();
@@ -205,6 +207,21 @@ public final class DBNinja {
 		 * FOR newState = PICKEDUP: mark the pickup status
 		 * 
 		 */
+//        String query;
+//        String query2;
+//        if (newState == order_state.PREPARED) {
+//            query = "update table ordertable " +
+//                    "set ordertable_isComplete = ? " +
+//                    "where ordertable_OrderID = ?";
+//            query2 = "update table pizza " +
+//                    "set pizza_PizzaState = ? " +
+//                    "";
+//        }
+//        else if (newState == order_state.PICKEDUP) {
+//
+//        }
+//
+//        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 	}
 
@@ -347,7 +364,27 @@ public final class DBNinja {
 		 * return them in an arrayList of discounts ordered by discount name.
 		 * 
 		*/
-		return null;
+
+        connect_to_db();
+        String query = "select discount_DiscountID, discount_DiscountName, discount_Amount, discount_IsPercent " +
+                "from discount";
+
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        ArrayList<Discount> discounts = new ArrayList<>();
+
+        while(rs.next())
+        {
+            Discount d = new Discount(
+                    rs.getInt("discount_DiscountID"),
+                    rs.getString("discount_DiscountName"),
+                    rs.getDouble("discount_Amount"),
+                    rs.getBoolean("discount_IsPercent")
+            );
+            discounts.add(d);
+        }
+        conn.close();
+		return discounts;
 	}
 
 	public static Discount findDiscountByName(String name) throws SQLException, IOException 
@@ -358,7 +395,28 @@ public final class DBNinja {
 		 * If it's not found....then return null
 		 *  
 		 */
-		 return null;
+        connect_to_db();
+        String query = "select discount_DiscountID, discount_DiscountName, discount_Amount, discount_IsPercent " +
+                "from discount " +
+                "where discount_DiscountName like ?";
+
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, name);
+        ResultSet rs = stmt.executeQuery();
+
+        conn.close();
+
+        if(rs.next())
+        {
+            Discount d = new Discount(
+                    rs.getInt("discount_DiscountID"),
+                    rs.getString("discount_DiscountName"),
+                    rs.getDouble("discount_Amount"),
+                    rs.getBoolean("discount_IsPercent")
+            );
+            return d;
+        }
+        return null;
 	}
 
 
@@ -402,6 +460,20 @@ public final class DBNinja {
 		 * If it's not found....then return null
 		 *  
 		 */
+        connect_to_db();
+        String query = "select * from customer where customer_PhoneNum = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, phoneNumber);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            int custID = rs.getInt("customer_CustID");
+            String fName = rs.getString("customer_FName");
+            String lName = rs.getString("customer_LName");
+            String phone = rs.getString("customer_PhoneNum");
+            Customer c = new Customer(custID, fName, lName, phone);
+            return c;
+        }
 		 return null;
 	}
 
@@ -513,7 +585,30 @@ public final class DBNinja {
 		 * If it's not found....then return null
 		 *  
 		 */
-		 return null;
+        connect_to_db();
+        String query = "select topping_TopID, topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT " +
+                "from topping " +
+                "where topping_ToppingName = ?";
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.setString(1, name);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            Topping t = new Topping(
+                    rs.getInt("topping_TopID"),
+                    rs.getString("topping_TopName"),
+                    rs.getInt("topping_SmallAMT"),
+                    rs.getInt("topping_MedAMT"),
+                    rs.getInt("topping_LgAMT"),
+                    rs.getInt("topping_XLAMT"),
+                    rs.getDouble("topping_CustPrice"),
+                    rs.getDouble("topping_BusPrice"),
+                    rs.getInt("topping_MinINVT"),
+                    rs.getInt("topping_CurINVT")
+            );
+            return t;
+        }
+        return null;
 	}
 
 	public static ArrayList<Topping> getToppingsOnPizza(Pizza p) throws SQLException, IOException 
@@ -522,8 +617,18 @@ public final class DBNinja {
 		 * This method builds an ArrayList of the toppings ON a pizza.
 		 * The list can then be added to the Pizza object elsewhere in the
 		 */
-
-		return null;	
+//        String query = "select * from pizza_topping " +
+//                "where pizza_PizzaID = ?";
+//        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+//        stmt.setInt(1, p.getPizzaID());
+//        ResultSet rs = stmt.executeQuery();
+//        ArrayList<Topping> toppingList = new ArrayList<>();
+//
+//        while(rs.next())
+//        {
+//
+//        }
+		return null;
 	}
 
 	public static void addToInventory(int toppingID, double quantity) throws SQLException, IOException 
@@ -532,6 +637,7 @@ public final class DBNinja {
 		 * Updates the quantity of the topping in the database by the amount specified.
 		 * 
 		 * */
+
 	}
 	
 	
@@ -624,7 +730,16 @@ public final class DBNinja {
 		 * Query the database fro the base customer price for that size and crust pizza.
 		 * 
 		*/
-		return 0.0;
+
+        String query = "select baseprice_CustPrice " +
+                "from baseprice " +
+                "where baseprice_Size = ? and baseprice_Crust = ?";
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.setString(1, size);
+        stmt.setString(2, crust);
+        ResultSet rs = stmt.executeQuery();
+
+		return rs.getDouble("baseprice_CustPrice");
 	}
 
 	public static double getBaseBusPrice(String size, String crust) throws SQLException, IOException 
@@ -633,7 +748,15 @@ public final class DBNinja {
 		 * Query the database fro the base business price for that size and crust pizza.
 		 * 
 		*/
-		return 0.0;
+        String query = "select baseprice_BusPrice " +
+                "from baseprice " +
+                "where baseprice_Size = ? and baseprice_Crust = ?";
+        PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        stmt.setString(1, size);
+        stmt.setString(2, crust);
+        ResultSet rs = stmt.executeQuery();
+
+        return rs.getDouble("baseprice_BusPrice");
 	}
 
 	
